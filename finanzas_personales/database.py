@@ -17,3 +17,11 @@ def obtener_categorias():
     cursor.close()
     conexion.close()
     return categorias
+
+def registrar_transaccion(descripcion, monto, fecha, tipo, categoria_id):
+    conexion = conectar()
+    cursor = conexion.cursor()
+    cursor.execute("INSERT INTO transacciones (descripcion, monto, fecha, tipo, categoria_id) VALUES (%s, %s, %s, %s, %s)", (descripcion, monto, fecha, tipo, categoria_id))
+    conexion.commit()
+    cursor.close()
+    conexion.close()
