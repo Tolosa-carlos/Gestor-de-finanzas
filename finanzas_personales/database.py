@@ -8,3 +8,12 @@ def conectar():
         database = "finanzas_personales"
     )
     return conexion
+
+def obtener_categorias():
+    conexion = conectar()
+    cursor = conexion.cursor()
+    cursor.execute("SELECT id, nombre, tipo FROM categorias")
+    categorias = cursor.fetchall()
+    cursor.close()
+    conexion.close()
+    return categorias
