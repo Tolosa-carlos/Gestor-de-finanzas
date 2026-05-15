@@ -42,10 +42,11 @@ def calcular_balance():
     cursor = conexion.cursor()
     cursor.execute("SELECT tipo, SUM(monto) FROM transacciones GROUP BY tipo")
     totales = cursor.fetchall()
+    total_ingresos, total_gastos = 0, 0
     for total in totales:
         if total[0] == "ingreso":
             total_ingresos = total[1]
-        else:
+        elif total[0] == "gasto":
             total_gastos = total[1]
     cursor.close()
     conexion.close()
