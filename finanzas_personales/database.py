@@ -36,3 +36,17 @@ def obtener_transacciones():
     cursor.close()
     conexion.close()
     return transacciones
+
+def calcular_balance():
+    conexion = conectar()
+    cursor = conexion.cursor()
+    cursor.execute("SELECT tipo, SUM(monto) FROM transacciones GROUP BY tipo")
+    totales = cursor.fetchall()
+    for total in totales:
+        if total[0] == "ingreso":
+            total_ingresos = total[1]
+        else:
+            total_gastos = total[1]
+    cursor.close()
+    conexion.close()
+    return total_ingresos, total_gastos    

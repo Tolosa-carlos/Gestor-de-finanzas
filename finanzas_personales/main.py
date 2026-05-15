@@ -15,3 +15,8 @@ transacciones = obtener_transacciones()
 for transaccion in transacciones:
     print(f"{transaccion[2]} - {transaccion[1]} - ${transaccion[3]} - {transaccion[4]} - {transaccion[0]}")
 print("\n")
+
+ingresos, gastos = calcular_balance()
+print(f"Ingresos: ${ingresos}")
+print(f"Gastos: ${gastos}")
+print(f"Balance: ${ingresos-gastos}")
