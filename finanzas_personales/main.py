@@ -19,4 +19,12 @@ print("\n")
 ingresos, gastos = calcular_balance()
 print(f"Ingresos: ${ingresos}")
 print(f"Gastos: ${gastos}")
-print(f"Balance: ${ingresos-gastos}")
+print(f"Balance: ${ingresos-gastos}\n")
+
+resultados = obtener_transacciones_por_categoria(3)
+for resultado in resultados:
+    print(f"{resultado[1]} - {resultado[0]} - {resultado[2]} - {resultado[3]}")
+print("\n")
+
+
+

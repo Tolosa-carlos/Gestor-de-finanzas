@@ -50,3 +50,16 @@ def calcular_balance():
     cursor.close()
     conexion.close()
     return total_ingresos, total_gastos    
+
+
+def obtener_transacciones_por_categoria(categoria):
+    conexion = conectar()
+    cursor = conexion.cursor()
+    cursor.execute("SELECT transacciones.descripcion, categorias.nombre, transacciones.fecha, transacciones.monto " \
+    "FROM transacciones " \
+    "JOIN categorias ON categoria_id = categorias.id " \
+    "WHERE categoria_id = %s", (categoria,))
+    transacciones = cursor.fetchall()
+    cursor.close()
+    conexion.close()
+    return transacciones
