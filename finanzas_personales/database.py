@@ -52,7 +52,6 @@ def calcular_balance():
     conexion.close()
     return total_ingresos, total_gastos    
 
-
 def obtener_transacciones_por_categoria(categoria):
     conexion = conectar()
     cursor = conexion.cursor()
@@ -64,3 +63,8 @@ def obtener_transacciones_por_categoria(categoria):
     cursor.close()
     conexion.close()
     return transacciones
+
+
+
+
+
