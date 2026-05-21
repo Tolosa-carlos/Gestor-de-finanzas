@@ -12,6 +12,14 @@ def menu():
     "6. Mostrar gráfico de gastos\n" \
     "7. Salir\n")
 
+def menu_graficos():
+    print("\n === GRÁFICO DE GASTOS ===\n" \
+    "1. Gráfico de torta.\n" \
+    "2. Gráfico de barras verticales.\n" \
+    "3. Gráfico de barras horizontales.\n" \
+    "4. Gráfico de líneas.\n" \
+    "5. Volver al menú principal.\n")
+
 def lista_transacciones():
     print("\n=== LISTA DE TRANSACCIONES ===")
     transacciones = obtener_transacciones()
@@ -42,9 +50,54 @@ def mostrar_grafico_gastos():
         nombres.append(fila[0])
         montos.append(fila[1])
 
-    plt.pie(montos, labels=nombres, autopct='%1.1f%%')
-    plt.title('Gastos por Categoría')
-    plt.show()
+    while True:
+        menu_graficos()
+
+        while True:
+            try:
+                opc_grafico = int(input("Seleccione una opción: "))
+
+                if opc_grafico in [1, 2, 3, 4, 5]:
+                    break
+                else:
+                    print("Opción no válida. Intente nuevamente.")
+            except ValueError:
+                print("La opción debe ser un número. Intente nuevamente.")
+
+        if opc_grafico == 1:
+            plt.pie(montos, labels=nombres, autopct='%1.1f%%')
+            plt.title('Gastos por Categoría')
+            plt.show()
+            break
+        
+        elif opc_grafico == 2:
+            plt.bar(nombres, montos, color=['steelblue', 'orange'])
+            plt.title('Gastos por Categoría')
+            plt.xlabel('Categoría')
+            plt.ylabel('Monto')
+            plt.show()
+            break
+
+        elif opc_grafico == 3:
+            plt.barh(nombres, montos, color=['steelblue', 'orange'])
+            plt.title('Gastos por Categoría')
+            plt.xlabel('Monto')
+            plt.ylabel('Categoría')
+            plt.show()
+            break
+        
+        elif opc_grafico == 4:
+            plt.plot(nombres, montos, marker='o', color='steelblue')
+            plt.title('Gastos por Categoría')
+            plt.xlabel('Categoría')
+            plt.ylabel('Monto')
+            plt.show()
+            break
+
+        elif opc_grafico == 5:
+            break
+
+    
 
 conexion = conectar()
 print("Conexion exitosa")
