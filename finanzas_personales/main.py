@@ -31,14 +31,38 @@ conexion.close()
 
 while True:
     menu()
-    opc = int(input("Seleccione una opción: "))
+
+    while True:
+        try:
+            opc = int(input("Seleccione una opción: "))
+            if opc in [1, 2, 3, 4, 5]:
+                break
+            else:
+                print("Opción no válida. Intente nuevamente.")
+        except ValueError:
+            print("La opción debe ser un número. Intente nuevamente.")
+
     if opc == 1:
         descripcion = input("\nDescripción: ")
-        monto = float(input("\nMonto: "))
+
+        while True:
+            try:
+                monto = float(input("\nMonto: "))
+                break
+            except ValueError:
+                print("El monto debe ser un número. Intente nuevamente.")
+        
         fecha = input("\nFecha (YYYY-MM-DD): ")
         tipo = input("\nTipo de transacción (ingreso/gasto): ")
         mostrar_categorias()
-        categoria_id = int(input("\nCategoría (ID): "))
+
+        while True:
+            try:
+                categoria_id = int(input("\nCategoría (ID): "))
+                break
+            except ValueError:
+                print("El ID de la categoría debe ser un número. Intente nuevamente.")  
+
         registrar_transaccion(descripcion, monto, fecha, tipo,categoria_id)
 
     elif opc == 2:
@@ -52,7 +76,14 @@ while True:
 
     elif opc == 4:
         mostrar_categorias()
-        categoria_a_buscar = int(input("\nIngrese el ID de la categoría a filtrar: "))
+
+        while True:
+            try:
+                categoria_a_buscar = int(input("\nIngrese el ID de la categoría a filtrar: "))
+                break
+            except ValueError:
+                print("El ID de la categoría debe ser un número. Intente nuevamente.")
+
         resultados = obtener_transacciones_por_categoria(categoria_a_buscar)
         for resultado in resultados:
             print(f"{resultado[1]} - {resultado[0]} - {resultado[2]} - {resultado[3]}")
