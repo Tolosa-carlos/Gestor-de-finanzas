@@ -29,7 +29,7 @@ def registrar_transaccion(descripcion, monto, fecha, tipo, categoria_id):
 def obtener_transacciones():
     conexion = conectar()
     cursor = conexion.cursor()
-    cursor.execute("SELECT transacciones.descripcion, categorias.nombre, transacciones.fecha, transacciones.monto, transacciones.tipo " \
+    cursor.execute("SELECT transacciones.descripcion, categorias.nombre, transacciones.fecha, transacciones.monto, transacciones.tipo, categorias.id " \
     "FROM transacciones " \
     "JOIN categorias ON transacciones.categoria_id = categorias.id")
     transacciones = cursor.fetchall()

@@ -1,28 +1,36 @@
+import csv
 from database import *
 
 def menu():
-    print("=== FINANZAS PERSONALES ===\n" \
+    print("\n=== FINANZAS PERSONALES ===\n" \
     "1. Registrar transacción.\n" \
     "2. Ver transacciones.\n" \
     "3. Ver balance.\n" \
     "4. Filtrar por categoría\n" \
-    "5. Salir\n")
+    "5. Exportar transacciones a CSV\n" \
+    "6. Salir\n")
 
 def lista_transacciones():
-    print("=== LISTA DE TRANSACCIONES ===")
+    print("\n=== LISTA DE TRANSACCIONES ===")
     transacciones = obtener_transacciones()
     for transaccion in transacciones:
         print(f"{transaccion[2]} - {transaccion[1]} - ${transaccion[3]} - {transaccion[4]} - {transaccion[0]}")
     print("\n")
 
 def mostrar_categorias():
-    print("--- LISTA DE CATEGORIAS ---")
+    print("\n=== LISTA DE CATEGORIAS ===")
     categorias = obtener_categorias()
     for categoria in categorias:
         print(f"{categoria[0]} - {categoria[1]} ({categoria[2]})")
     print("\n")
 
-
+def exportar_csv():
+    transacciones = obtener_transacciones()
+    with open('transacciones.csv', 'w', newline='', encoding='utf-8') as file:
+        writer = csv.writer(file)
+        writer.writerow(["Descripción", "Categoría", "Fecha", "Monto", "Tipo", "ID"])
+        for transaccion in transacciones:
+            writer.writerow(transaccion)
 
 
 conexion = conectar()
@@ -35,7 +43,7 @@ while True:
     while True:
         try:
             opc = int(input("Seleccione una opción: "))
-            if opc in [1, 2, 3, 4, 5]:
+            if opc in [1, 2, 3, 4, 5, 6]:
                 break
             else:
                 print("Opción no válida. Intente nuevamente.")
@@ -47,7 +55,7 @@ while True:
 
         while True:
             try:
-                monto = float(input("\nMonto: "))
+                monto = float(input("\nMonto: $"))
                 break
             except ValueError:
                 print("El monto debe ser un número. Intente nuevamente.")
@@ -90,7 +98,10 @@ while True:
         print("\n")
 
     elif opc == 5:
-        print("Saliendo del programa...")
+        exportar_csv()
+
+    elif opc == 6:
+        print("\nSaliendo del programa...")
         break
 
 
