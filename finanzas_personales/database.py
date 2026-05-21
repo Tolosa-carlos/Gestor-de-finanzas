@@ -64,6 +64,20 @@ def obtener_transacciones_por_categoria(categoria):
     conexion.close()
     return transacciones
 
+def obtener_gastos_por_categoria():
+    conexion = conectar()
+    cursor = conexion.cursor()
+    cursor.execute("SELECT categorias.nombre, " \
+    "SUM(monto) " \
+    "FROM transacciones " \
+    "JOIN categorias " \
+    "ON transacciones.categoria_id = categorias.id " \
+    "WHERE transacciones.tipo = 'gasto' "
+    "GROUP BY categorias.nombre")
+    gastos = cursor.fetchall()
+    cursor.close()
+    conexion.close()
+    return gastos
 
 
 

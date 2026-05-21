@@ -1,4 +1,5 @@
 import csv
+import matplotlib.pyplot as plt
 from database import *
 
 def menu():
@@ -8,7 +9,8 @@ def menu():
     "3. Ver balance.\n" \
     "4. Filtrar por categoría\n" \
     "5. Exportar transacciones a CSV\n" \
-    "6. Salir\n")
+    "6. Mostrar gráfico de gastos\n" \
+    "7. Salir\n")
 
 def lista_transacciones():
     print("\n=== LISTA DE TRANSACCIONES ===")
@@ -32,6 +34,17 @@ def exportar_csv():
         for transaccion in transacciones:
             writer.writerow(transaccion)
 
+def mostrar_grafico_gastos():
+    gastos = obtener_gastos_por_categoria()
+    nombres = []
+    montos = []
+    for fila in gastos:
+        nombres.append(fila[0])
+        montos.append(fila[1])
+
+    plt.pie(montos, labels=nombres, autopct='%1.1f%%')
+    plt.title('Gastos por Categoría')
+    plt.show()
 
 conexion = conectar()
 print("Conexion exitosa")
@@ -43,7 +56,7 @@ while True:
     while True:
         try:
             opc = int(input("Seleccione una opción: "))
-            if opc in [1, 2, 3, 4, 5, 6]:
+            if opc in [1, 2, 3, 4, 5, 6, 7]:
                 break
             else:
                 print("Opción no válida. Intente nuevamente.")
@@ -101,6 +114,9 @@ while True:
         exportar_csv()
 
     elif opc == 6:
+        mostrar_grafico_gastos()
+
+    elif opc == 7:
         print("\nSaliendo del programa...")
         break
 
