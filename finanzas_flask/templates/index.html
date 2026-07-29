@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+<h2>Gestor de Finanzas Personales</h2>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card text-black bg-succes">
+                <div class="card-body">
+                    <h5 class="card-title">Ingresos</h5>
+                    <p class="card-text fs-4">$ {{ ingresos }} </p>
+                </div>
+            </div>
+        </div>
+    
+        <div class="col-md-4">
+            <div class="card text-white bg-danger">
+                <div class="card-body">
+                    <h5 class="card-title">Gastos</h5>
+                    <p class="card-text fs-4">$ {{ gastos }} </p>
+                </div>
+            </div>
+        </div>
+    
+    
+        <div class="col-md-4">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Balance</h5>
+                    <p class="card-text fs-4">$ {{ ingresos - gastos }} </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
