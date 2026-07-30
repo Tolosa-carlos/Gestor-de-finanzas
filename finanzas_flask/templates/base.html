@@ -14,11 +14,21 @@
             <div class="d-flex">
                 <a href="/transacciones" class="nav-link text-white">Transacciones</a>
                 <a href="/registrar" class="nav-link text-white ms-3">Registrar</a>
+                <a href="/categorias" class="nav-link text-white ms-3">Categorías</a>
             </div>
         </div>
     </nav>
 
     <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for categoria, mensaje in messages %}
+                    <div class="alert alert-{{ categoria }} alert-dismissible fade show" role="alert">
+                        {{ mensaje }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         {% block contenido %}
         {% endblock %}
     </div>

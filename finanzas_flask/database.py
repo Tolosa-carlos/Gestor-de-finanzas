@@ -79,6 +79,11 @@ def obtener_gastos_por_categoria():
     conexion.close()
     return gastos
 
-
-
+def registrar_categoria(nombre, tipo):
+    conexion = conectar()
+    cursor = conexion.cursor()
+    cursor.execute("INSERT INTO categorias (nombre, tipo) VALUES (%s, %s)", (nombre, tipo))
+    conexion.commit()
+    cursor.close()
+    conexion.close()
 
