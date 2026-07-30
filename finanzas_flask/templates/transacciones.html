@@ -15,11 +15,19 @@
     <tbody>
         {% for transaccion in transacciones %}
         <tr>
-            <td> {{ transaccion[2] }} </td>
-            <td> {{ transaccion[1] }} </td>
-            <td> {{ transaccion[0] }}</td>
             <td> {{ transaccion[3] }} </td>
+            <td> {{ transaccion[2] }} </td>
+            <td> {{ transaccion[1] }}</td>
             <td> {{ transaccion[4] }} </td>
+            <td> {{ transaccion[5] }} </td>
+            <td>
+                <form action="/transacciones/eliminar/{{ transaccion[0] }}" method="post">
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+            </td>
+            <td>
+               <a href="/transacciones/editar/{{ transaccion[0] }}" class="btn btn-warning btn-sm">Editar</a>
+            </td>
         </tr>
         {% endfor %}
     </tbody>

@@ -29,7 +29,7 @@ def registrar_transaccion(descripcion, monto, fecha, tipo, categoria_id):
 def obtener_transacciones():
     conexion = conectar()
     cursor = conexion.cursor()
-    cursor.execute("SELECT transacciones.descripcion, categorias.nombre, transacciones.fecha, transacciones.monto, transacciones.tipo, categorias.id " \
+    cursor.execute("SELECT transacciones.id, transacciones.descripcion, categorias.nombre, transacciones.fecha, transacciones.monto, transacciones.tipo " \
     "FROM transacciones " \
     "JOIN categorias ON transacciones.categoria_id = categorias.id")
     transacciones = cursor.fetchall()
@@ -117,6 +117,31 @@ def actualizar_categoria(id, tipo, nombre):
     conexion = conectar()
     cursor = conexion.cursor()
     cursor.execute("UPDATE categorias SET nombre = %s, tipo = %s WHERE id = %s", (nombre, tipo, id))
+    conexion.commit()
+    cursor.close()
+    conexion.close()
+
+def eliminar_transaccion(id):
+    conexion = conectar()
+    cursor = conexion.cursor()
+    cursor.execute("DELETE FROM transacciones WHERE id = %s", (id,))
+    conexion.commit()
+    cursor.close()
+    conexion.close()
+
+def obtener_transaccion(id):
+    conexion = conectar()
+    cursor = conexion.cursor()
+    cursor.execute("SELECT fecha, categoria_id, descripcion, monto, tipo FROM transacciones WHERE id = %s", (id,))
+    transaccion = cursor.fetchone()
+    cursor.close()
+    conexion.close()
+    return transaccion
+
+def actualizar_transaccion(id, fecha, categoria, descripcion, monto, tipo):
+    conexion = conectar()
+    cursor = conexion.cursor()
+    cursor.execute("UPDATE transacciones SET fecha = %s, categoria_id = %s, descripcion = %s, monto = %s, tipo = %s WHERE id = %s" , (fecha, categoria, descripcion, monto, tipo, id))
     conexion.commit()
     cursor.close()
     conexion.close()

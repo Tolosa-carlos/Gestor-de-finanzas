@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block contenido %}
+<h2>Editar transacción</h2>
+<form method="post">
+    <div class="mb-3">
+        <label class="form-label">Fecha</label>
+        <input type="date" name="fecha" value="{{ transaccion[0] }}" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Categoría</label>
+        <select name="categoria_id" class="form-control">
+            {% for categoria in categorias %}
+                <option value="{{ categoria[0]}}" {% if categoria[0] == transaccion[1] %}selected{% endif %}> {{ categoria[1] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Descripción</label>
+        <input type="text" name="descripcion" value="{{ transaccion[2] }}" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Monto</label>
+        <input type="number" name="monto" value="{{ transaccion[3] }}" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label"></label>
+        <select name="tipo" class="form-control">
+            <option value="ingreso" {% if transaccion[4] == 'ingreso' %}selected{% endif %}>Ingreso</option>
+            <option value="gasto" {% if transaccion[4] == 'gasto' %}selected{% endif %}>Gasto</option>
+            <option value="ambos" {% if transaccion[4] == 'ambos' %}selected{% endif %}>Ambos</option>
+        </select>
+    </div>
+
+    <button type="submit" class=" btn btn-primary mt-3">Actualizar</button>
+</form>
+
+{% endblock %}

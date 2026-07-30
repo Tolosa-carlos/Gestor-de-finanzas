@@ -63,5 +63,27 @@ def editar_categoria(id):
     categoria = obtener_categoria(id)
     return render_template('editar_categoria.html', categoria=categoria, id=id)
 
+@app.route('/transacciones/eliminar/<int:id>', methods=['POST'])
+def eliminar_trans(id):
+    eliminar_transaccion(id)
+    flash('Transacción eliminada correctamente', 'success')
+    return redirect(url_for('transacciones'))
+
+@app.route('/transacciones/editar/<int:id>', methods=['GET', 'POST'])
+def editar_transaccion(id):
+    if request.method == 'POST':
+        fecha = request.form['fecha']
+        categoria = request.form['categoria_id']
+        descripcion = request.form['descripcion']
+        monto = request.form['monto']
+        tipo = request.form['tipo']
+        actualizar_transaccion(id, fecha, categoria, descripcion, monto, tipo)
+        flash('Transacción actualizada correctamente', 'success')
+        return redirect(url_for('transacciones'))
+
+    transaccion = obtener_transaccion(id)
+    categorias = obtener_categorias()
+    return render_template('editar_transaccion.html', transaccion=transaccion, categorias=categorias, id=id)
+
 if __name__ == '__main__':
     app.run(debug=True)
