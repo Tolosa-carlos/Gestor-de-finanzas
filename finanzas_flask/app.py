@@ -42,5 +42,26 @@ def categorias():
     categorias = obtener_categorias()
     return render_template('categorias.html', categorias=categorias)
 
+@app.route('/categorias/eliminar/<int:id>', methods=['POST'])
+def eliminar_cat(id):
+    if categoria_tiene_transacciones(id) > 0:
+        flash('No se puede eliminar. La categoría tiene transacciones asociadas.', 'danger')
+    else:
+        eliminar_categoria(id)
+        flash('Categoría eliminada correctamente', 'success')
+    return redirect(url_for('categorias'))
+
+@app.route('/categorias/editar/<int:id>', methods=['GET', 'POST'])
+def editar_categoria(id):
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        tipo = request.form['tipo']
+        actualizar_categoria(id, tipo, nombre)
+        flash('Categoría actualizada correctamente', 'success')
+        return redirect(url_for('categorias'))
+
+    categoria = obtener_categoria(id)
+    return render_template('editar_categoria.html', categoria=categoria, id=id)
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -87,3 +87,36 @@ def registrar_categoria(nombre, tipo):
     cursor.close()
     conexion.close()
 
+def eliminar_categoria(id):
+    conexion = conectar()
+    cursor = conexion.cursor()
+    cursor.execute("DELETE FROM categorias WHERE id = %s", (id,))
+    conexion.commit()
+    cursor.close()
+    conexion.close()
+
+def categoria_tiene_transacciones(id):
+    conexion = conectar()
+    cursor = conexion.cursor()
+    cursor.execute("SELECT COUNT(*) FROM transacciones WHERE categoria_id = %s", (id,))
+    resultado = cursor.fetchone()
+    cursor.close()
+    conexion.close()
+    return resultado[0]
+
+def obtener_categoria(id):
+    conexion = conectar()
+    cursor = conexion.cursor()
+    cursor.execute("SELECT nombre, tipo FROM categorias WHERE id = %s", (id,))
+    categoria = cursor.fetchone()
+    cursor.close()
+    conexion.close()
+    return categoria
+
+def actualizar_categoria(id, tipo, nombre):
+    conexion = conectar()
+    cursor = conexion.cursor()
+    cursor.execute("UPDATE categorias SET nombre = %s, tipo = %s WHERE id = %s", (nombre, tipo, id))
+    conexion.commit()
+    cursor.close()
+    conexion.close()

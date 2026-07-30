@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block contenido %}
+<h2>Editar categoría</h2>
+<form method="post">
+    <div class="mb-3">
+        <label class="form-label">Nombre</label>
+        <input type="text" name="nombre" value="{{ categoria[0] }}" class="form-control">
+    </div>
+    <div class="mb-3">
+        <label class="form-label"></label>
+        <select name="tipo" class="form-control">
+            <option value="ingreso" {% if categoria[1] == 'ingreso' %}selected{% endif %}>Ingreso</option>
+            <option value="gasto" {% if categoria[1] == 'gasto' %}selected{% endif %}>Gasto</option>
+            <option value="ambos" {% if categoria[1] == 'ambos' %}selected{% endif %}>Ambos</option>
+        </select>
+    </div>
+
+    <button type="submit" class=" btn btn-primary mt-3">Actualizar</button>
+</form>
+
+{% endblock %}

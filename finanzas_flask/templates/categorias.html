@@ -14,12 +14,21 @@
         <tr>
             <td> {{ categoria[1] }}</td>
             <td> {{ categoria[2] }}</td>
+            <td>
+                <form action="/categorias/eliminar/{{ categoria[0] }}" method="post">
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+            </td>
+            <td>
+               <a href="/categorias/editar/{{ categoria[0] }}" class="btn btn-warning btn-sm">Editar</a>
+            </td>
+            
         </tr>
         {% endfor %}
     </tbody>
 </table>
 
-<h2>Regristar categoría</h2>
+<h2>Regristrar categoría</h2>
 <form method="post">
     <div class="mb-3">
         <label class="form-label">Nombre</label>
