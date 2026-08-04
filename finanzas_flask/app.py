@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from database import *
 
 app = Flask(__name__)
-app.secret_key = 'string_Secreto'
+app.secret_key = os.getenv('SECRET_KEY')
 
 @app.route('/')
 def index():
