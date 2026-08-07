@@ -1,6 +1,7 @@
 import mysql.connector
 from dotenv import load_dotenv
 import os
+from werkzeug.security import generate_password_hash, check_password_hash
 
 load_dotenv()
 
@@ -150,3 +151,21 @@ def actualizar_transaccion(id, fecha, categoria, descripcion, monto, tipo):
     conexion.commit()
     cursor.close()
     conexion.close()
+
+def registrar_usuario(usuario, contrasena):
+    conexion = conectar()
+    cursor = conexion.cursor()
+    password_hash = generate_password_hash(contrasena)
+    cursor.execute("INSERT INTO usuarios(usuario, contrasena) VALUES (%s, %s)", (usuario, password_hash))
+    conexion.commit()
+    cursor.close()
+    conexion.close()
+
+def obtener_usuario(usuario):
+    conexion = conectar()
+    cursor = conexion.cursor()
+    cursor.execute("SELECT id, usuario, contraseña FROM usuarios WHERE usuario = %s", (usuario, ))
+    user = cursor.fetchone()
+    cursor.close()
+    conexion.close()
+    return user

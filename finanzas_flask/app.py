@@ -1,21 +1,74 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from database import *
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from werkzeug.security import check_password_hash
 
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY')
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+class Usuario(UserMixin):
+    def __init__(self, id, username):
+        self.id = id
+        self.username = username
+
+@login_manager.user_loader
+def cargar_usuario(usuario_id):
+    conexion = conectar()
+    cursor = conexion.cursor()
+    cursor.execute("SELECT id, username FROM usuarios WHERE id = %s", (usuario_id, ))
+    usuario = cursor.fetchone()
+    cursor.close()
+    conexion.close()
+    if usuario:
+        return Usuario(usuario[0], usuario[1])
+    return None
+
+@app.route('/login', methods = ['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        usuario = obtener_usuario(username)
+        if usuario and check_password_hash(usuario[2], password):
+            user_obj = Usuario(usuario[0], usuario[1])
+            login_user(user_obj)
+            return redirect(url_for('index'))
+        flash('Usuario o contraseña incorrectas', 'danger')
+    return render_template('login.html')
+
+@app.route('/registro', methods = ['GET', 'POST'])
+def registro():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        registrar_usuario(username, password)
+        flash('Usuario registrado correctamente', 'success')
+        return redirect(url_for('login'))
+    return render_template('registro.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
 @app.route('/')
+@login_required
 def index():
     ingresos, gastos = calcular_balance()
     return render_template('index.html', ingresos = ingresos, gastos = gastos)
 
-
 @app.route('/transacciones')
+@login_required
 def transacciones():
     datos = obtener_transacciones()
     return render_template('transacciones.html', transacciones = datos)
 
 @app.route('/registrar', methods=['GET', 'POST'])
+@login_required
 def registrar():
     if request.method == 'POST':
         descripcion = request.form['descripcion']
@@ -31,6 +84,7 @@ def registrar():
     return render_template('registrar.html', categorias = categorias)
 
 @app.route('/categorias', methods=['GET', 'POST'])
+@login_required
 def categorias():
     if request.method == 'POST':
         nombre = request.form['nombre']
