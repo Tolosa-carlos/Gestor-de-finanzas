@@ -9,6 +9,8 @@ app.secret_key = os.getenv('SECRET_KEY')
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+login_manager.login_message = 'Necesitas iniciar sesion para acceder'
+login_manager.login_message_category = 'warning'
 class Usuario(UserMixin):
     def __init__(self, id, username):
         self.id = id
@@ -58,6 +60,7 @@ def logout():
 @app.route('/')
 @login_required
 def index():
+    print(f"Usuario autenticado: {current_user.is_authenticated}")
     ingresos, gastos = calcular_balance()
     return render_template('index.html', ingresos = ingresos, gastos = gastos)
 
