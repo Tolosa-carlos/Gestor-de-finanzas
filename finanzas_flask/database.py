@@ -156,7 +156,7 @@ def registrar_usuario(usuario, contrasena):
     conexion = conectar()
     cursor = conexion.cursor()
     password_hash = generate_password_hash(contrasena)
-    cursor.execute("INSERT INTO usuarios(usuario, contrasena) VALUES (%s, %s)", (usuario, password_hash))
+    cursor.execute("INSERT INTO usuarios(username, password) VALUES (%s, %s)", (usuario, password_hash))
     conexion.commit()
     cursor.close()
     conexion.close()
@@ -164,7 +164,7 @@ def registrar_usuario(usuario, contrasena):
 def obtener_usuario(usuario):
     conexion = conectar()
     cursor = conexion.cursor()
-    cursor.execute("SELECT id, usuario, contraseña FROM usuarios WHERE usuario = %s", (usuario, ))
+    cursor.execute("SELECT id, username, password FROM usuarios WHERE username = %s", (usuario, ))
     user = cursor.fetchone()
     cursor.close()
     conexion.close()
