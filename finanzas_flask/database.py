@@ -37,7 +37,8 @@ def obtener_transacciones():
     cursor = conexion.cursor()
     cursor.execute("SELECT transacciones.id, transacciones.descripcion, categorias.nombre, transacciones.fecha, transacciones.monto, transacciones.tipo " \
     "FROM transacciones " \
-    "JOIN categorias ON transacciones.categoria_id = categorias.id")
+    "JOIN categorias ON transacciones.categoria_id = categorias.id" \
+    "ORDER BY transacciones.fecha DESC")
     transacciones = cursor.fetchall()
     cursor.close()
     conexion.close()
@@ -138,7 +139,7 @@ def eliminar_transaccion(id):
 def obtener_transaccion(id):
     conexion = conectar()
     cursor = conexion.cursor()
-    cursor.execute("SELECT fecha, categoria_id, descripcion, monto, tipo FROM transacciones WHERE id = %s ORDER BY transacciones.fecha DESC", (id,))
+    cursor.execute("SELECT fecha, categoria_id, descripcion, monto, tipo FROM transacciones WHERE id = %s", (id,))
     transaccion = cursor.fetchone()
     cursor.close()
     conexion.close()
