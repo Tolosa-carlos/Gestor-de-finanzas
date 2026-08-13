@@ -37,7 +37,7 @@ def obtener_transacciones():
     cursor = conexion.cursor()
     cursor.execute("SELECT transacciones.id, transacciones.descripcion, categorias.nombre, transacciones.fecha, transacciones.monto, transacciones.tipo " \
     "FROM transacciones " \
-    "JOIN categorias ON transacciones.categoria_id = categorias.id" \
+    "JOIN categorias ON transacciones.categoria_id = categorias.id " \
     "ORDER BY transacciones.fecha DESC")
     transacciones = cursor.fetchall()
     cursor.close()
