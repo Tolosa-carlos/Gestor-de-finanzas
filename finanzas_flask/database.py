@@ -138,7 +138,7 @@ def eliminar_transaccion(id):
 def obtener_transaccion(id):
     conexion = conectar()
     cursor = conexion.cursor()
-    cursor.execute("SELECT fecha, categoria_id, descripcion, monto, tipo FROM transacciones WHERE id = %s", (id,))
+    cursor.execute("SELECT fecha, categoria_id, descripcion, monto, tipo FROM transacciones WHERE id = %s ORDER BY transacciones.fecha DESC", (id,))
     transaccion = cursor.fetchone()
     cursor.close()
     conexion.close()
