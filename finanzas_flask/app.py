@@ -67,7 +67,7 @@ def index():
 @app.route('/transacciones')
 @login_required
 def transacciones():
-    datos = obtener_transacciones()
+    datos = obtener_transacciones(current_user.id)
     return render_template('transacciones.html', transacciones = datos)
 
 @app.route('/registrar', methods=['GET', 'POST'])
