@@ -79,11 +79,11 @@ def registrar():
         fecha = request.form['fecha']
         tipo = request.form['tipo']
         categoria_id = int(request.form['categoria_id'])
-        registrar_transaccion(descripcion, monto, fecha, tipo, categoria_id)
+        registrar_transaccion(descripcion, monto, fecha, tipo, categoria_id, current_user.id)
         flash('Transacción registrada correctamente', 'success')
         return redirect(url_for('transacciones'))
     
-    categorias = obtener_categorias()
+    categorias = obtener_categorias(current_user.id)
     return render_template('registrar.html', categorias = categorias)
 
 @app.route('/categorias', methods=['GET', 'POST'])
@@ -92,11 +92,11 @@ def categorias():
     if request.method == 'POST':
         nombre = request.form['nombre']
         tipo = request.form['tipo']
-        registrar_categoria(nombre, tipo)
+        registrar_categoria(nombre, tipo, current_user.id)
         flash('Categoría registrada correctamente', 'success')
         return redirect(url_for('categorias'))
 
-    categorias = obtener_categorias()
+    categorias = obtener_categorias(current_user.id)
     return render_template('categorias.html', categorias=categorias)
 
 @app.route('/categorias/eliminar/<int:id>', methods=['POST'])
@@ -139,7 +139,7 @@ def editar_transaccion(id):
         return redirect(url_for('transacciones'))
 
     transaccion = obtener_transaccion(id)
-    categorias = obtener_categorias()
+    categorias = obtener_categorias(current_user.id)
     return render_template('editar_transaccion.html', transaccion=transaccion, categorias=categorias, id=id)
 
 if __name__ == '__main__':

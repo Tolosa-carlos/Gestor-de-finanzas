@@ -15,19 +15,19 @@ def conectar():
     )
     return conexion
 
-def obtener_categorias():
+def obtener_categorias(usuario_id):
     conexion = conectar()
     cursor = conexion.cursor()
-    cursor.execute("SELECT id, nombre, tipo FROM categorias")
+    cursor.execute("SELECT id, nombre, tipo FROM categorias WHERE usuario_id = %s", (usuario_id,))
     categorias = cursor.fetchall()
     cursor.close()
     conexion.close()
     return categorias
 
-def registrar_transaccion(descripcion, monto, fecha, tipo, categoria_id):
+def registrar_transaccion(descripcion, monto, fecha, tipo, categoria_id, usuario_id):
     conexion = conectar()
     cursor = conexion.cursor()
-    cursor.execute("INSERT INTO transacciones (descripcion, monto, fecha, tipo, categoria_id) VALUES (%s, %s, %s, %s, %s)", (descripcion, monto, fecha, tipo, categoria_id))
+    cursor.execute("INSERT INTO transacciones (descripcion, monto, fecha, tipo, categoria_id, usuario_id) VALUES (%s, %s, %s, %s, %s, %s)", (descripcion, monto, fecha, tipo, categoria_id, usuario_id))
     conexion.commit()
     cursor.close()
     conexion.close()
