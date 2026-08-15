@@ -39,7 +39,7 @@ def obtener_transacciones(usuario_id):
     "FROM transacciones " \
     "JOIN categorias ON transacciones.categoria_id = categorias.id " \
     "WHERE transacciones.usuario_id = %s" \
-    "ORDER BY transacciones.fecha DESC", (usuario_id))
+    "ORDER BY transacciones.fecha DESC", (usuario_id,))
     transacciones = cursor.fetchall()
     cursor.close()
     conexion.close()
