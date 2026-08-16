@@ -67,6 +67,7 @@ def index():
 @app.route('/transacciones')
 @login_required
 def transacciones():
+    print(f"ID del usuario actual: {current_user.id}")
     datos = obtener_transacciones(current_user.id)
     return render_template('transacciones.html', transacciones = datos)
 
