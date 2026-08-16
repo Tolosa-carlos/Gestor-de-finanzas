@@ -60,14 +60,12 @@ def logout():
 @app.route('/')
 @login_required
 def index():
-    print(f"Usuario autenticado: {current_user.is_authenticated}")
-    ingresos, gastos = calcular_balance()
+    ingresos, gastos = calcular_balance(current_user.id)
     return render_template('index.html', ingresos = ingresos, gastos = gastos)
 
 @app.route('/transacciones')
 @login_required
 def transacciones():
-    print(f"ID del usuario actual: {current_user.id}")
     datos = obtener_transacciones(current_user.id)
     return render_template('transacciones.html', transacciones = datos)
 

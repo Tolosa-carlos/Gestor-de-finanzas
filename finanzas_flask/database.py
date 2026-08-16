@@ -45,10 +45,10 @@ def obtener_transacciones(usuario_id):
     conexion.close()
     return transacciones
 
-def calcular_balance():
+def calcular_balance(usuario_id):
     conexion = conectar()
     cursor = conexion.cursor()
-    cursor.execute("SELECT tipo, SUM(monto) FROM transacciones GROUP BY tipo")
+    cursor.execute("SELECT tipo, SUM(monto) FROM transacciones WHERE usuario_id = %s GROUP BY tipo", (usuario_id,))
     totales = cursor.fetchall()
     total_ingresos, total_gastos = 0, 0
     for total in totales:
