@@ -1,6 +1,24 @@
 {% extends 'base.html' %}
 
 {% block contenido %}
+
+<form method="GET" class="row g-3 mb-4">
+    <div class="col-md-3">
+        <label class="form-label">Fecha</label>
+        <input type="date" name="fecha" class="form-control" value="{{fecha or ''}}">
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Tipo</label>
+        <select name="tipo" class="form-control">
+            <option value="">Todos</option>
+            <option value="ingreso" {% if tipo == 'ingreso' %} selected {% endif %}>Ingreso</option>
+            <option value="gasto"   {% if tipo == 'ingreso' %} selected {% endif %}>Gasto</option>
+        </select>
+    </div>
+    <div class="col-md-3 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+    </div>
+</form>
     
 <table class="table table-striped table-hover">
     <thead>

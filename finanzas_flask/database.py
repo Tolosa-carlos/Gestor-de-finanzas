@@ -171,3 +171,27 @@ def obtener_usuario(usuario):
     cursor.close()
     conexion.close()
     return user
+
+def transacciones_filtradas(usuario_id, fecha = None, tipo = None):
+    conexion = conectar()
+    cursor = conexion.cursor()
+    query ="SELECT transacciones.id, transacciones.descripcion, categorias.nombre, transacciones.fecha, transacciones.monto, transacciones.tipo " \
+    "FROM transacciones " \
+    "JOIN categorias ON transacciones.categoria_id = categoria.id " \
+    "WHERE transacciones.usuario_id = %s"
+
+    parametros = [usuario_id]
+    if fecha:
+        query += " AND transacciones.fecha >= %s"
+        parametros.append(fecha)
+    if tipo:
+        query += " AND transacciones.tipo = %s"
+        parametros.append(tipo)
+
+    query += " ORDER BY transacciones.fecha DESC"
+    cursor.execute(query, tuple(parametros))
+    transacciones = cursor.fetchall()
+    cursor.close()
+    conexion.close()
+    return transacciones
+
