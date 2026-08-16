@@ -177,7 +177,7 @@ def transacciones_filtradas(usuario_id, fecha = None, tipo = None):
     cursor = conexion.cursor()
     query ="SELECT transacciones.id, transacciones.descripcion, categorias.nombre, transacciones.fecha, transacciones.monto, transacciones.tipo " \
     "FROM transacciones " \
-    "JOIN categorias ON transacciones.categoria_id = categoria.id " \
+    "JOIN categorias ON transacciones.categoria_id = categorias.id " \
     "WHERE transacciones.usuario_id = %s"
 
     parametros = [usuario_id]
